@@ -4,10 +4,20 @@ const inputBtn = document.querySelector("#input-btn")
 const inputEl = document.querySelector("#input-el")
 const ulEl = document.querySelector("#ul-el")
 
-inputBtn.addEventListener("click", function () {
-    myLeads.push(inputEl.value)
-    inputEl.value = ""
+let leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"))
+
+if (leadsFromLocalStorage) {
+    myLeads = leadsFromLocalStorage
     renderLeads()
+}
+
+inputBtn.addEventListener("click", function () {
+    if (inputEl.value !== "") {
+        myLeads.push(inputEl.value)
+        inputEl.value = ""
+        localStorage.setItem("myLeads", JSON.stringify(myLeads))
+        renderLeads()
+    }
 }) 
 
 function renderLeads() {
@@ -22,7 +32,7 @@ function renderLeads() {
             </li>
         `
 
-        // const li = document.createElement("li")
+        // const li = document.createElement("li")  
         // li.textContent = myLeads[i]
         // ulEl.append(li)
     }
